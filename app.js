@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import Server from "./models/Server.js";
 
-dotenv.config();
+dotenv.config({
+     path: '.env'
+});
 const server = new Server();
 server.listen();
