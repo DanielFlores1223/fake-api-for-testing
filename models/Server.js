@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import connection from '../db/connection.js';
+import mainRoutes from '../routes/main.js';
 
 class Server {
 
@@ -24,12 +25,12 @@ class Server {
      }
 
      routes() {
-          this.app.use( cors() );
-          this.app.use( express.json() );
+         this.app.use( '/api/main',  mainRoutes );
      }
 
      middlewares() {
-
+          this.app.use( cors() );
+          this.app.use( express.json() );
      }
 
      listen() {
