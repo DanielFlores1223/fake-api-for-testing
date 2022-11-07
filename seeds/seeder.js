@@ -1,14 +1,16 @@
 import { exit } from 'node:process';
 import connection from '../db/connection.js';
-import { Main } from '../models/index.js';
+import { Main, Articulo } from '../models/index.js';
 import main from './main.data.js';
+import articulos from './articulo.data.js';
 
 
 const importData = async () => {
      try {
           await connection.authenticate();
           await connection.sync();
-          await Main.bulkCreate( main );
+          await Articulo.bulkCreate( articulos )
+          //await Main.bulkCreate( main );
           console.log('Data was added correctly on database');
           exit();
      } catch (error) {

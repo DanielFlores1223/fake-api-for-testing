@@ -1,6 +1,6 @@
 import { request, response } from 'express'; 
 import { Op } from 'sequelize';  
-import { Main } from '../models/index.js';  
+import { Main, Articulo } from '../models/index.js';  
 import connection from '../db/connection.js';
 
 
@@ -11,13 +11,21 @@ const getByFolio = async ( req = request, res = response ) => {
           console.log(folio)
 
           if(!folio || folio == '')
-               result = await Main.findAll();
+               result = await Main.findAll({ include: [
+                    { model: Articulo, as: 'articulo' }
+               ] });
+               /*result = await Articulo.findAll({ include: [
+                    { model: Main }
+               ] });*/
           else
                result = await Main.findAll( 
                     { 
                          where: {
                               folio
-                         }
+                         },
+                         include: [
+                              { model: Articulo, as: 'articuloJoin' }
+                         ]
                     }
                );
 
@@ -28,6 +36,7 @@ const getByFolio = async ( req = request, res = response ) => {
           res.status(500).json( { ok: true, error: 'Algo salio mal...' } );
      }
 }
+
 
 export {
      getByFolio,
